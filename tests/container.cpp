@@ -35,7 +35,9 @@ TEST_CASE("Container")
 		SECTION("test iterators")
 		{
 			for (const Item& item : container)
-				std::cout << item.id << "\n";
+				;
+			for (Item& item : container)
+				;
 		}
 	}
 }

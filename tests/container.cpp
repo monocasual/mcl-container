@@ -18,16 +18,19 @@ TEST_CASE("Container")
 
 	SECTION("test add")
 	{
-		const int id = 1;
+		Item item1;
+		Item item2;
+		item1.id = 1;
+		item2.id = 2;
 
-		Item item;
-		item.id = id;
+		container.add(std::move(item1));
+		container.add(std::move(item2));
 
-		container.add(std::move(item));
-
-		REQUIRE(container.size() == 1);
-		REQUIRE(container.getById(id).id == id);
-		REQUIRE(container.getById(id).index == 0);
+		REQUIRE(container.size() == 2);
+		REQUIRE(container.getById(1).id == 1);
+		REQUIRE(container.getById(1).index == 0);
+		REQUIRE(container.getById(2).id == 2);
+		REQUIRE(container.getById(2).index == 1);
 
 		SECTION("test iterators")
 		{

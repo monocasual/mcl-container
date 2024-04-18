@@ -28,5 +28,11 @@ TEST_CASE("Container")
 		REQUIRE(container.size() == 1);
 		REQUIRE(container.getById(id).id == id);
 		REQUIRE(container.getById(id).index == 0);
+
+		SECTION("test iterators")
+		{
+			for (const Item& item : container)
+				std::cout << item.id << "\n";
+		}
 	}
 }

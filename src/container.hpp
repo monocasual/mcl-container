@@ -33,12 +33,24 @@ template <typename T, bool Identifiable = false, bool Sortable = false>
 class Container
 {
 public:
+	using iterator       = typename std::vector<T>::iterator;
+	using const_iterator = typename std::vector<T>::const_iterator;
+
 	Container() = default;
 
 	Container(std::initializer_list<T> l)
 	: m_items(l)
 	{
 	}
+
+	/* Iterators */
+
+	iterator       begin() { return m_items.begin(); }
+	const_iterator begin() const { return m_items.begin(); }
+	const_iterator cbegin() const { return m_items.cbegin(); }
+	iterator       end() { return m_items.end(); }
+	const_iterator end() const { return m_items.end(); }
+	const_iterator cend() const { return m_items.cend(); }
 
 	const int size() const
 	{

@@ -171,16 +171,6 @@ public:
 		return const_cast<T&>(std::as_const(*this).getByIndex(index));
 	}
 
-	/* getAll (1)
-	Returns a const reference to the underlying vector of items. */
-
-	const std::vector<T>& getAll() const { return m_items; }
-
-	/* getAll (2)
-	Alternate version of getAll() (1) that returns a non-const reference. */
-
-	std::vector<T>& getAll() { return m_items; }
-
 	/* anyOf
 	Returns true if any item satisfies the callback 'f'. */
 

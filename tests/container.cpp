@@ -31,6 +31,8 @@ TEST_CASE("Container")
 		REQUIRE(container.getById(1).index == 0);
 		REQUIRE(container.getById(2).id == 2);
 		REQUIRE(container.getById(2).index == 1);
+		REQUIRE(container.contains(2) == true);
+		REQUIRE(container.contains(4) == false);
 
 		SECTION("test iterators")
 		{

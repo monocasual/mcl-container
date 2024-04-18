@@ -341,7 +341,6 @@ private:
 			item.index = i++;
 	}
 
-public:
 	std::conditional_t<std::same_as<T, Empty>, Empty, std::vector<T>> m_items;
 };
 

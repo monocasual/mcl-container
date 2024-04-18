@@ -20,7 +20,10 @@ TEST_CASE("Container")
 	{
 		const int id = 1;
 
-		container.add({id});
+		Item item;
+		item.id = id;
+
+		container.add(std::move(item));
 
 		REQUIRE(container.size() == 1);
 		REQUIRE(container.getById(id).id == id);

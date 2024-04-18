@@ -33,6 +33,13 @@ template <typename T, bool Identifiable = false, bool Sortable = false>
 class Container
 {
 public:
+	Container() = default;
+
+	Container(std::initializer_list<T> l)
+	: m_items(l)
+	{
+	}
+
 	const int size() const
 	{
 		return m_items.size();

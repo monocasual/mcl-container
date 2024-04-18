@@ -125,9 +125,9 @@ public:
 	Returns whether the container contains item with the given id. */
 
 	bool contains(int id)
+	    requires HasId<T>
 	{
-		bool found = findById(id) != nullptr;
-		return found;
+		return findById(id) != nullptr;
 	}
 
 	/* getById (1)

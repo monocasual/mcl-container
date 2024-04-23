@@ -326,8 +326,8 @@ public:
 		m_items.clear();
 	}
 
-	std::conditional_t<Identifiable, int, Empty>     id;
-	std::conditional_t<Sortable, std::size_t, Empty> index;
+	std::conditional_t<Identifiable, int, Empty>     id    = {};
+	std::conditional_t<Sortable, std::size_t, Empty> index = {};
 
 private:
 	template <typename P>

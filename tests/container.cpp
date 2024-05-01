@@ -1,8 +1,37 @@
 #include "src/container.hpp"
+#include "src/id.hpp"
 #include <catch2/catch_test_macros.hpp>
 #include <iostream>
 
 using namespace mcl;
+
+TEST_CASE("ID")
+{
+	ID::reset();
+
+	SECTION("generation")
+	{
+		ID id = ID::generate();
+
+		REQUIRE(id == 1);
+	}
+
+	SECTION("generation with value")
+	{
+		const int value = 45;
+
+		ID id = ID::generate(value);
+
+		REQUIRE(id == value);
+
+		SECTION("using old value")
+		{
+			ID id2 = ID::generate(value);
+
+			REQUIRE(id2 == value + 1); // 'value' is old, expected a new one
+		}
+	}
+}
 
 TEST_CASE("Container")
 {

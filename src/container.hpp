@@ -1,6 +1,7 @@
 #ifndef MCL_CONTAINER_H
 #define MCL_CONTAINER_H
 
+#include "id.hpp"
 #include <cassert>
 #include <functional>
 #include <iostream>
@@ -62,7 +63,7 @@ public:
 	Returns nullptr if not found. */
 
 	template <typename U>
-	const U* deepFindById(int id) const
+	const U* deepFindById(ID id) const
 	{
 		const U* found = nullptr;
 		deepFindById(id, found);
@@ -73,7 +74,7 @@ public:
 	Alternate version of deepFindById() (1) that returns a non-const pointer. */
 
 	template <typename U>
-	U* deepFindById(int id)
+	U* deepFindById(ID id)
 	{
 		return const_cast<U*>(std::as_const(*this).template deepFindById<U>(id));
 	}
@@ -82,7 +83,7 @@ public:
 	Internal recursive function used by deepFindById (1). Do not call this directly. */
 
 	template <typename U>
-	bool deepFindById(int id, const U*& found) const
+	bool deepFindById(ID id, const U*& found) const
 	{
 		for (const T& item : m_items)
 		{
@@ -104,7 +105,7 @@ public:
 	Finds an element with the given ID in the current container. Returns nullptr
 	if not found. */
 
-	const T* findById(int id) const
+	const T* findById(ID id) const
 	    requires HasId<T>
 	{
 		const auto it = findIf([id](const T& item)
@@ -115,7 +116,7 @@ public:
 	/* FindById (2)
 	Alternate version of FindById() (1) that returns a non-const pointer. */
 
-	T* findById(int id)
+	T* findById(ID id)
 	    requires HasId<T>
 	{
 		return const_cast<T*>(std::as_const(*this).findById(id));
@@ -124,7 +125,7 @@ public:
 	/* contains
 	Returns whether the container contains item with the given id. */
 
-	bool contains(int id)
+	bool contains(ID id)
 	    requires HasId<T>
 	{
 		return findById(id) != nullptr;
@@ -134,7 +135,7 @@ public:
 	Returns a const reference of item with given ID. Assumes that the item is
 	present in the container (raises assertion otherwise). */
 
-	const T& getById(int id) const
+	const T& getById(ID id) const
 	    requires HasId<T>
 	{
 		const T* item = findById(id);
@@ -145,7 +146,7 @@ public:
 	/* getById (2)
 	Alternate version of getById() (1) that returns a non-const reference. */
 
-	T& getById(int id)
+	T& getById(ID id)
 	    requires HasId<T>
 	{
 		return const_cast<T&>(std::as_const(*this).getById(id));
@@ -183,7 +184,7 @@ public:
 	Return the index of the item with the given int. Assumes that the item is
 	present in the container (raises assertion otherwise). */
 
-	const int getIndex(int id) const
+	const int getIndex(ID id) const
 	    requires HasId<T>
 	{
 		if constexpr (HasIndex<T>)
@@ -293,13 +294,13 @@ public:
 	/* moveById
 	Moves the element with the given id to 'newIndex'. */
 
-	void moveById(int id, std::size_t newIndex)
+	void moveById(ID id, std::size_t newIndex)
 	    requires HasId<T> && HasIndex<T>
 	{
 		moveByIndex(getById(id).index, newIndex);
 	}
 
-	void removeById(int id)
+	void removeById(ID id)
 	    requires HasId<T>
 	{
 		const auto f = [id](const T& item)
@@ -326,7 +327,7 @@ public:
 		m_items.clear();
 	}
 
-	std::conditional_t<Identifiable, int, Empty>     id    = {};
+	std::conditional_t<Identifiable, ID, Empty>      id    = {};
 	std::conditional_t<Sortable, std::size_t, Empty> index = {};
 
 private:
@@ -336,7 +337,7 @@ private:
 		return std::find_if(m_items.begin(), m_items.end(), p);
 	}
 
-	bool isUniqueId(int id) const
+	bool isUniqueId(ID id) const
 	    requires HasId<T>
 	{
 		return findIf([id](const T& item)

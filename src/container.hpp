@@ -39,6 +39,19 @@ public:
 
 	Container() = default;
 
+	Container(ID id)
+	    requires HasId<T>
+	: id(id)
+	{
+	}
+
+	Container(ID id, std::initializer_list<T> l)
+	    requires HasId<T>
+	: id(id)
+	, m_items(l)
+	{
+	}
+
 	Container(std::initializer_list<T> l)
 	: m_items(l)
 	{

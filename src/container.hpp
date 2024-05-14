@@ -13,7 +13,7 @@ namespace mcl
 // clang-format off
 template <typename T>
 concept HasId = requires(T t) {
-	{ T::id } -> std::convertible_to<int>;
+	{ T::id } -> std::convertible_to<uint64_t>;
 };
 
 template <typename T>

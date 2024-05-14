@@ -1,6 +1,8 @@
 #ifndef MCL_ID_H
 #define MCL_ID_H
 
+#include <cstdint>
+
 namespace mcl
 {
 class ID
@@ -8,7 +10,7 @@ class ID
 public:
 	ID() = default; // Invalid ID
 
-	ID(int value)
+	ID(uint64_t value)
 	: m_value(value)
 	{
 	}
@@ -18,7 +20,7 @@ public:
 	with that value. Useful when loading things from the model that already have
 	their own ID. */
 
-	static ID generate(int value = 0)
+	static ID generate(uint64_t value = 0)
 	{
 		if (value > m_gen)
 		{
@@ -46,17 +48,17 @@ public:
 		return m_value != other.m_value;
 	}
 
-	bool operator==(int value) const
+	bool operator==(uint64_t value) const
 	{
 		return m_value == value;
 	}
 
-	bool operator!=(int value) const
+	bool operator!=(uint64_t value) const
 	{
 		return m_value != value;
 	}
 
-	operator int() const // convertible to int
+	operator uint64_t() const // convertible to uint64_t
 	{
 		return m_value;
 	}
@@ -66,14 +68,14 @@ public:
 		return m_value > 0;
 	}
 
-	int get() const
+	uint64_t get() const
 	{
 		return m_value;
 	}
 
 private:
-	int               m_value = {0};
-	inline static int m_gen   = {0};
+	uint64_t               m_value = {0};
+	inline static uint64_t m_gen   = {0};
 };
 } // namespace mcl
 

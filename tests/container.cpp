@@ -13,7 +13,7 @@ TEST_CASE("ID")
 	{
 		ID id = ID::generate();
 
-		REQUIRE(id == 1);
+		REQUIRE(id == ID(1));
 	}
 
 	SECTION("generation with value")
@@ -22,13 +22,13 @@ TEST_CASE("ID")
 
 		ID id = ID::generate(value);
 
-		REQUIRE(id == value);
+		REQUIRE(id == ID(value));
 
 		SECTION("using old value")
 		{
 			ID id2 = ID::generate(value);
 
-			REQUIRE(id2 == value + 1); // 'value' is old, expected a new one
+			REQUIRE(id2 == ID(value + 1)); // 'value' is old, expected a new one
 		}
 	}
 }
@@ -56,9 +56,9 @@ TEST_CASE("Container")
 		container.add(std::move(item2));
 
 		REQUIRE(container.size() == 2);
-		REQUIRE(container.getById(1).id == 1);
+		REQUIRE(container.getById(1).id == ID(1));
 		REQUIRE(container.getById(1).index == 0);
-		REQUIRE(container.getById(2).id == 2);
+		REQUIRE(container.getById(2).id == ID(2));
 		REQUIRE(container.getById(2).index == 1);
 		REQUIRE(container.contains(2) == true);
 		REQUIRE(container.contains(4) == false);

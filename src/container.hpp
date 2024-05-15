@@ -114,6 +114,28 @@ public:
 		return false;
 	}
 
+	/* deepGetById (1)
+	Returns a const reference of item with given ID, by looking through the whole
+	hierarchy, recursively. Assumes that the item is present in the container
+	(raises assertion otherwise). */
+
+	template <typename U>
+	const U& deepGetById(ID id) const
+	{
+		const U* item = deepFindById<U>(id);
+		assert(item != nullptr);
+		return *item;
+	}
+
+	/* deepGetById (2)
+	Alternate version of deepGetById() (1) that returns a non-const reference. */
+
+	template <typename U>
+	U& deepGetById(ID id)
+	{
+		return const_cast<U&>(std::as_const(*this).template deepGetById<U>(id));
+	}
+
 	/* FindById (1)
 	Finds an element with the given ID in the current container. Returns nullptr
 	if not found. */

@@ -335,6 +335,21 @@ public:
 		moveByIndex(getById(id).index, newIndex);
 	}
 
+	/* deepRemoveById
+	Removes the element with the given ID by looking through the entire hierarchy,
+	recursively. */
+
+	template <typename U>
+	void deepRemoveById(ID id)
+	{
+		for (T& item : m_items)
+		{
+			if constexpr (HasId<T>)
+				removeById(id);
+			item.template deepRemoveById<U>(id);
+		}
+	}
+
 	void removeById(ID id)
 	    requires HasId<T>
 	{

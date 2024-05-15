@@ -107,4 +107,21 @@ TEST_CASE("Container, recursive mode")
 	REQUIRE(column.size() == 3);
 	REQUIRE(column.findById(4) == nullptr);              // sub-channel should not be found in shallow find...
 	REQUIRE(column.deepFindById<Channel>(4) != nullptr); // ...but should be in deep find
+
+	SECTION("test shallow deletion by id")
+	{
+		column.removeById(1);
+
+		REQUIRE(column.size() == 2);
+		REQUIRE(column.findById(1) == nullptr);
+	}
+
+	SECTION("test deep deletion by id")
+	{
+		column.deepRemoveById<Channel>(6); // channel with ID=6 was inside channel with ID=1
+
+		REQUIRE(column.size() == 3);
+		REQUIRE(column.getById(1).size() == 2);
+		REQUIRE(column.deepFindById<Channel>(6) == nullptr);
+	}
 }

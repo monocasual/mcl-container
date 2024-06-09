@@ -83,6 +83,23 @@ public:
 		return ids;
 	}
 
+	/* getIf
+	Returns the item that statisfies predicate 'p'. */
+
+	template <typename P>
+	const T& getIf(P p) const
+	{
+		const auto it = findIf(p);
+		assert(it != m_items.end());
+		return *it;
+	}
+
+	template <typename P>
+	T& getIf(P p)
+	{
+		return const_cast<T&>(std::as_const(*this).getIf(p));
+	}
+
 	/* deepFindById (1)
 	Finds an element with the given ID in the whole hierarchy, recursively.
 	Returns nullptr if not found. */
@@ -269,7 +286,7 @@ public:
 	/* getIf
 	Returns a vector of item pointers that satisfy the callback 'f'. */
 
-	std::vector<T*> getIf(std::function<bool(const T&)> f)
+	std::vector<T*> getItemsIf(std::function<bool(const T&)> f)
 	{
 		std::vector<T*> out;
 		for (T& item : m_items)

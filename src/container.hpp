@@ -172,7 +172,7 @@ public:
 	/* contains
 	Returns whether the container contains item with the given id. */
 
-	bool contains(ID id)
+	bool contains(ID id) const
 	    requires HasId<T>
 	{
 		return findById(id) != nullptr;

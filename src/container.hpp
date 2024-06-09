@@ -71,6 +71,18 @@ public:
 		return m_items.size();
 	}
 
+	/* getItemIds
+	Returns a vector with all the IDs of contained items. */
+
+	const std::vector<ID> getItemIds() const
+	    requires HasId<T>
+	{
+		std::vector<ID> ids;
+		for (const T& item : m_items)
+			ids.push_back(item.id);
+		return ids;
+	}
+
 	/* deepFindById (1)
 	Finds an element with the given ID in the whole hierarchy, recursively.
 	Returns nullptr if not found. */

@@ -195,6 +195,16 @@ public:
 		return findById(id) != nullptr;
 	}
 
+	/* deepContains
+	Returns whether the any container in the hierarchy contains item with the
+	given id. */
+
+	template <typename U>
+	bool deepContains(ID id) const
+	{
+		return deepFindById<U>(id) != nullptr;
+	}
+
 	/* getById (1)
 	Returns a const reference of item with given ID. Assumes that the item is
 	present in the container (raises assertion otherwise). */
